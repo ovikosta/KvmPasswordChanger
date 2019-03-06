@@ -1,0 +1,196 @@
+{% extends 'kvmcp/base.html' %}
+{% block content %}
+    {% load staticfiles %}
+    <div class="content">
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <span class="title-section">КВМ ММТС-9</span>
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for kvm in kvm_m9 %}
+                                {% if kvm.1.0.state %}
+                                    <li class="list-group-item list-group-item-success">
+                                        <span class="ml-5">Online</span>
+                                        {% else %}
+                                    <li class="list-group-item list-group-item-danger">
+                                    <span class="ml-5">Offline</span>
+                                {% endif %}
+                            <span class="float-left">{{ kvm.0|upper }}</span>
+                            {% for stat in kvm.1 %}
+                                <div class="float-right">
+                                    <div class="d-inline mr-2">
+                                        <span>Статус:</span>
+                                        <a href="" data-toggle="popover" content="{{ stat.end_access }}" {% if not stat.state %}data-content="Устройство не в сети."{% endif %}>
+                                            {% if stat.status and stat.state %}
+                                                <img src="{% static 'kvmcp/img/on.png' %}" alt="Устройство свободно.">
+                                            {% else %}
+                                                <img src="{% static 'kvmcp/img/off.png' %}" alt="Устройство занято.">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="btn-group dropright btn-group-sm btn-group-style float-right">
+                                        <button type="submit" class="btn btn-outline-dark btn-sm btnChangePswd py-0"
+                                                value="{{ kvm.0 }}">
+                                            <ion-icon name="sync" class="mt-1"></ion-icon>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropright</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            {% for pwd in kvm.1 %}
+                                                <div class="text-center">
+                                                    <span class="password">{{ pwd.password }}</span>
+                                                    <button type="button" class="btn btn-link clipboard">
+                                                        <i class="far fa-copy"></i>
+                                                    </button>
+                                                </div>
+                                            {% endfor %}
+                                            <a class="dropdown-item" href="http://{{ kvm.0 }}.msm.ru/">Настроить {{ kvm.0|upper }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <span class="title-section">КВМ ВДНХ</span>
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for kvm in kvm_vdnh %}
+                                {% if kvm.1.0.state %}
+                                    <li class="list-group-item list-group-item-success">
+                                        <span class="ml-5">Online</span>
+                                        {% else %}
+                                    <li class="list-group-item list-group-item-danger">
+                                    <span class="ml-5">Offline</span>
+                                {% endif %}
+                            <span class="float-left">{{ kvm.0|upper }}</span>
+                            {% for stat in kvm.1 %}
+                                <div class="float-right">
+                                    <div class="d-inline mr-2">
+                                        <span>Статус:</span>
+                                        <a href="" data-toggle="popover" content="{{ stat.end_access }}" {% if not stat.state %}data-content="Устройство не в сети."{% endif %} >
+                                            {% if stat.status and stat.state %}
+                                                <img class="switch-on" src="{% static 'kvmcp/img/on.png' %}" alt="Устройство свободно.">
+                                            {% else %}
+                                                <img class="switch-off" src="{% static 'kvmcp/img/off.png' %}" alt="Устройство занято.">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="btn-group dropright btn-group-sm btn-group-style float-right">
+                                        <button type="submit" class="btn btn-outline-dark btn-sm btnChangePswd py-0"
+                                                value="{{ kvm.0 }}">
+                                            <ion-icon name="sync" class="mt-1"></ion-icon>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropright</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            {% for pwd in kvm.1 %}
+                                                <div class="text-center">
+                                                    <span class="password">{{ pwd.password }}</span>
+                                                    <button type="button" class="btn btn-link clipboard">
+                                                        <i class="far fa-copy"></i>
+                                                    </button>
+                                                </div>
+                                            {% endfor %}
+                                            <a class="dropdown-item" href="http://{{ kvm.0 }}.msm.ru/">Настроить {{ kvm.0|upper }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <span class="title-section">КВМ Остаповский</span>
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for kvm in kvm_idc3 %}
+                                {% if kvm.1.0.state %}
+                                    <li class="list-group-item list-group-item-success">
+                                        <span class="ml-5">Online</span>
+                                        {% else %}
+                                    <li class="list-group-item list-group-item-danger">
+                                    <span class="ml-5">Offline</span>
+                                {% endif %}
+                            <span class="float-left">{{ kvm.0|upper }}</span>
+                            {% for stat in kvm.1 %}
+                                <div class="float-right">
+                                    <div class="d-inline mr-2">
+                                        <span>Статус:</span>
+                                        <a href="" data-toggle="popover" content="{{ stat.end_access }}" {% if not stat.state %}data-content="Устройство не в сети."{% endif %}>
+                                            {% if stat.status and stat.state %}
+                                                <img src="{% static 'kvmcp/img/on.png' %}" alt="Устройство свободно.">
+                                            {% else %}
+                                                <img src="{% static 'kvmcp/img/off.png' %}" alt="Устройство занято.">
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <div class="btn-group dropright btn-group-sm btn-group-style float-right">
+                                        <button type="submit" class="btn btn-outline-dark btn-sm btnChangePswd py-0"
+                                                value="{{ kvm.0 }}">
+                                            <ion-icon name="sync" class="mt-1"></ion-icon>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-dark dropdown-toggle dropdown-toggle-split"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropright</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            {% for pwd in kvm.1 %}
+                                                <div class="text-center">
+                                                    <span class="password">{{ pwd.password }}</span>
+                                                    <button type="button" class="btn btn-link clipboard">
+                                                        <i class="far fa-copy"></i>
+                                                    </button>
+                                                </div>
+                                            {% endfor %}
+                                            <a class="dropdown-item" href="http://{{ kvm.0 }}.msm.ru/">Настроить {{ kvm.0|upper }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

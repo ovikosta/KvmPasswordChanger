@@ -1,0 +1,52 @@
+{% extends 'kvmcp/base.html' %}
+{% block content %}
+
+    <div class="content">
+        <div class="accordion" id="accordionExample">
+        {% for title in titles %}
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            {{ title }}
+                        </button>
+                    </h5>
+                </div>
+                {% for k in kvm %}
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <form name="form-change-password" action="" method="POST">
+                            {% csrf_token %}
+                            <ul class="list-group">
+                                {% if forloop.counter <= 5 %}
+                                <li class="list-group-item list-group-item-success">
+                                    {{ k.0|upper }}
+                                    <span>1</span>
+                                    <span>2</span>
+
+                                    <div class="btn-group dropright">
+                                        <button type="submit" class="btn btn-primary btn-sm" id="changePswd">
+                                            Change
+                                        </button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropright</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">Show password</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endif %}
+                            </ul>
+
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+                    </div>
+        {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

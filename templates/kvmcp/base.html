@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KvmChangePassword</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'kvmcp/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:800" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <a class="navbar-brand navbar-nav ml-3" href="/">
+        <img src="{% static "kvmcp/img/tech_logo_158x48.png" %}"  alt="logo">
+    </a>
+    <div class="navbar-text mx-auto">
+        <div class="app-title">
+            <h1>Kvm<span><img src="{% static "kvmcp/img/kvm-ch-logo.png" %}"></span>PasswordChanger</h1>
+        </div>
+    </div>
+    <div class="mr-5">
+        {% if user.is_authenticated  %}
+            <span class="title-user"><b>Пользователь:</b> {{ user.get_username }}</span>
+            <a class="btn btn-outline-dark float-right" role="button" href="{% url 'logout' %}?next={{request.path}}">Выйти</a>
+        {% else %}
+            <a class="btn btn-outline-dark" role="button" href="{% url 'login' %}?next={{request.path}}">Войти</a>
+        {% endif %}
+    </div>
+</nav>
+<br>
+<div class="container mt-5" id="modalActivateContainer">
+    <div class="modal" tabindex="-1" role="dialog" id="activateModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Пароль для </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>
+                        <small class="text-muted">Пароль:</small>
+                        <p class="pswd-fields">{{ password }}</p>
+                    </h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnPsswdModal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+</div>
+<div class="container mt-5" id="modalReportContainer">
+    <div class="modal" tabindex="-1" role="dialog" id="reportModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Отправить репорт разработчику.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="report-text">Текст письма:</label>
+                        <textarea class="form-control" rows="5" id="report-text"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnReportModal">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="fixed-bottom">
+    <div class="text-right small align-self-end mr-3">
+        <a href="#" id="btnReport">
+            <h6>Report by OviKosta</h6>
+        </a>
+    </div>
+</footer>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="{% static 'kvmcp/js/changePassword.js' %}"></script>
+<script src="{% static 'kvmcp/js/popover.js' %}"></script>
+<script src="{% static 'kvmcp/js/reportMessage.js' %}"></script>
+<script src="{% static 'kvmcp/js/clipboard.js' %}"></script>
+<script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+
+
+</html>

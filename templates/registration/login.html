@@ -1,0 +1,47 @@
+{% extends 'kvmcp/base.html' %}
+{% block content %}
+
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.
+        </div>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+            <div class="alert alert-warning" role="alert">
+                Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.
+            </div>
+        {% else %}
+            <div class="alert alert-primary" role="alert">
+                Пожалуйста пройдите авторизацию, чтобы увидеть страницу.
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="username">{{ form.username.label_tag }}</label>
+            <td>{{ form.username }}</td>
+            {#            <input type="text" class="form-control" id="username" placeholder="Enter username">#}
+        </div>
+        <div class="form-group">
+            <label for="password">{{ form.password.label_tag }}</label>
+            <td>{{ form.password }}</td>
+            {#            <input type="password" class="form-control" id="password" placeholder="Password">#}
+        </div>
+        <div>
+            <input class="btn btn-primary" type="submit" value="Войти" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+
+    </form>
+
+    {# Assumes you setup the password_reset view in your URLconf #}
+    {#    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>#}
+
+
+{% endblock %}
