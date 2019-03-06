@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -123,9 +123,9 @@ TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 
 LOGIN_REDIRECT_URL = '/'
 
-EMAIL_HOST = 'mail.msm.ru'
+EMAIL_HOST = ''
 
-DEFAULT_FROM_EMAIL = 'report_app@tech.ru'
+DEFAULT_FROM_EMAIL = ''
 
 LOGGING = {
     'version': 1,
